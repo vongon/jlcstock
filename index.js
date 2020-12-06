@@ -3,7 +3,7 @@ const async = require('async');
 const sgMail = require('@sendgrid/mail');
 
 const parts = [
-  { partNumber: 'C7171', description: 'example capacitor' },
+  { partNumber: 'C389591', description: 'ADAU1761BCPZ-R7, codec' },
   { partNumber: 'C69901', description: 'TPA6132A2RTER, headphone amp' },
 ]
 
