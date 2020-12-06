@@ -1,18 +1,36 @@
 const puppeteer = require('puppeteer');
 
-(async () => {
-  const browser = await puppeteer.launch()
-  const page = await browser.newPage()
-  await page.goto('http://www.meteocentrale.ch/it/europa/svizzera/meteo-corvatsch/details/S067910/')
-
-  const result = await page.evaluate(() => {
-    let temperature = document.querySelector('.column-4').innerText
-    return {
-      temperature
+var main = (cb) => {
+  query('C7171', (err, { quantity }) => {
+    if (err) {
+      return cb(err);
     }
-  })
+    console.log({quantity})
+  });
+}
 
-  console.log(result)
+var query = (partNumber, cb) => {
+  (async () => {
+    const browser = await puppeteer.launch({headless: true})
+    const page = await browser.newPage()
+    await page.goto(`https://jlcpcb.com/parts/componentSearch?searchTxt=${partNumber}`,{waitUntil: 'networkidle2'})
 
-  browser.close()
-})()
+    const result = await page.evaluate(() => {
+      let quantity = document.querySelector('td.ng-binding').innerText;
+      return {
+        quantity
+      }
+    })
+    browser.close()
+    return cb(null, result)
+  })()
+}
+
+
+main((err, result) => {
+  if (err) {
+    throw err;
+  }
+  console.log("Done!", {result});
+})
+
