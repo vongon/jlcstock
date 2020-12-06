@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const async = require('async');
+const sgMail = require('@sendgrid/mail');
 
 const parts = [
   { partNumber: 'C7171', description: 'example capacitor' },
@@ -7,6 +8,8 @@ const parts = [
 ]
 
 var main = (cb) => {
+  return sendEmail(cb);
+
   results = [];
   async.eachSeries(parts, (part, cb) => {
     console.log('Querying part', part.partNumber);
@@ -37,6 +40,25 @@ var main = (cb) => {
     console.log(results);
     return cb();
   });
+}
+
+var sendEmail = (cb) => {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+  const msg = {
+    to: 'ryan@vongon.com',
+    from: 'ryan@vongon.com',
+    subject: 'sendgrid test',
+    text: 'test!!'
+  }
+  sgMail
+    .send(msg)
+    .then(() => {
+      console.log('email sent success');
+      return cb();
+    })
+    .catch((err) => {
+      return cb(err);
+    })
 }
 
 var queryStock = (partNumber, cb) => {

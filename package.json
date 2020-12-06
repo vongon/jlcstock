@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/vongon/jlcstock#readme",
   "dependencies": {
+    "@sendgrid/mail": "^7.4.0",
     "async": "^3.2.0",
     "puppeteer": "^5.5.0"
   }
