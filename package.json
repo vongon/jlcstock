@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/vongon/jlcstock#readme",
   "dependencies": {
-    "scrape-it": "^5.2.4"
+    "puppeteer": "^5.5.0"
   }
 }
