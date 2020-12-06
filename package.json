@@ -1,0 +1,22 @@
+{
+  "name": "jlcstock",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vongon/jlcstock.git"
+  },
+  "author": "Ryan McGill <ryanjamesmcgill@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vongon/jlcstock/issues"
+  },
+  "homepage": "https://github.com/vongon/jlcstock#readme",
+  "dependencies": {
+    "scrape-it": "^5.2.4"
+  }
+}
