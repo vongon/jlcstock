@@ -8,8 +8,6 @@ const parts = [
 ]
 
 var main = (cb) => {
-  return sendEmail(cb);
-
   results = [];
   async.eachSeries(parts, (part, cb) => {
     console.log('Querying part', part.partNumber);
@@ -32,23 +30,31 @@ var main = (cb) => {
       }
     }
 
+    let data = {}
+
     if(allInStock) {
-      console.log('Everything is in stock!');
+      data = {
+        subject: 'JLCSTOCK: Everything is in stock!',
+        body: results
+      }
     } else {
-      console.log('At least one part out of stock : (');
+      data = {
+        subject: 'JLCSTOCK: At least one part out of stock : (',
+        body: results
+      }
     }
-    console.log(results);
-    return cb();
+    console.log(data)
+    sendEmail(data, cb);
   });
 }
 
-var sendEmail = (cb) => {
+var sendEmail = (data, cb) => {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY)
   const msg = {
     to: 'ryan@vongon.com',
     from: 'ryan@vongon.com',
-    subject: 'sendgrid test',
-    text: 'test!!'
+    subject: data.subject,
+    text: JSON.stringify(data.body, null, 2)
   }
   sgMail
     .send(msg)
